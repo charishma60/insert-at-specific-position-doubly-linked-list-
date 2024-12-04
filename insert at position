@@ -1,0 +1,64 @@
+public class DoublyLinkedListpos {
+    Node head;
+
+    class Node {
+        int data;
+        Node next;
+        Node prev;
+
+        Node(int data) {
+            this.data = data;
+            next = null;
+            prev = null;
+        }
+    }
+    public void InsertAtPosition(int data, int position) {
+       
+        Node newNode = new Node(data);
+        if (head == null && position == 0) {
+            head = newNode;
+            return;
+        }
+        if (position == 0) {
+            newNode.next = head;
+            head.prev = newNode;
+            head = newNode;
+            return;
+        }
+        Node temp = head;
+        int index = 0;
+        while (temp != null && index < position - 1) {
+            temp = temp.next;
+            index++;
+        }
+        if (temp != null) {
+            newNode.next = temp.next;
+            if (temp.next != null) {
+                temp.next.prev = newNode;
+            }
+            temp.next = newNode;
+            newNode.prev = temp;
+        } else {
+            System.out.println("Position is out of bounds");
+        }
+    }
+    public void printAllTheNodes() {
+        Node temp = head;
+        while (temp != null) {
+            System.out.print(temp.data + " ");
+            temp = temp.next;
+        }
+        System.out.println();
+    }
+    public static void main(String args[]) {
+        DoublyLinkedListpos list = new DoublyLinkedListpos();
+        list.InsertAtPosition(100,0);
+        list.InsertAtPosition(200,1);
+        list.InsertAtPosition(300,2);
+        System.out.println(" ");
+        list.printAllTheNodes();  
+        list.InsertAtPosition(250, 2);
+        System.out.println("after inserting 250 at position 2:");
+        list.printAllTheNodes();
+    }
+}
